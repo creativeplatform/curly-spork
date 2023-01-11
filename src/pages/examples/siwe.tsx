@@ -83,23 +83,16 @@ function SignInButton() {
 
   return (
     <div>
-      <Heading as="h3" fontSize="xl" my={4}>
-        Try it out
-      </Heading>
-      <p>
-        <Button onClick={signIn}>Sign-in With Ethereum</Button>
-      </p>
+      {!loggedInAddress && (
+        <>
+          <Button onClick={signIn}>Sign-in With Ethereum</Button>
+        </>
+      )}
 
       {loggedInAddress && (
-        <div>
-          <Heading as="h3" fontSize="xl" my={4}>
-            Signed in as
-          </Heading>
-          <p>{loggedInAddress}</p>
-          <p>
-            <Button onClick={logout}>Sign Out</Button>
-          </p>
-        </div>
+        <>
+          <Button onClick={logout}>Sign Out</Button>
+        </>
       )}
     </div>
   )
@@ -110,27 +103,9 @@ export default function SiweExample() {
 
   if (isConnected) {
     return (
-      <div>
-        <NextSeo title="Sign-in With Ethereum" />
-        <Heading as="h2" fontSize="2xl" my={4}>
-          Sign-in With Ethereum
-        </Heading>
-        <p>
-          Sign-in With Ethereum is a new form of authentication that enables users to control their digital identity with their Ethereum account and
-          ENS profile instead of relying on a traditional intermediary.
-        </p>
-
-        <UnorderedList>
-          <ListItem>
-            <LinkComponent href="https://login.xyz/">More info</LinkComponent>
-          </ListItem>
-          <ListItem>
-            <LinkComponent href="https://wagmi.sh/examples/sign-in-with-ethereum">Wagmi Docs</LinkComponent>
-          </ListItem>
-        </UnorderedList>
-
+      <>
         <SignInButton />
-      </div>
+      </>
     )
   }
 

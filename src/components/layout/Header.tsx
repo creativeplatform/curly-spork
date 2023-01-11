@@ -7,7 +7,6 @@ import {
   Box,
   useToast,
   useDisclosure,
-  useColorMode,
   VStack,
   HStack,
   Button,
@@ -34,6 +33,7 @@ import { SITE_NAME, TRANSACTION_TITLES } from 'utils/config'
 import { LinkComponent } from './LinkComponent'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { ConnectKitButton } from 'connectkit'
+import SignInButton from '../../pages/examples/siwe'
 
 // Takes a long hash string and truncates it.
 function truncateHash(hash: string, length = 38): string {
@@ -154,19 +154,6 @@ export function Header(props: Props) {
                 fontWeight={700}
                 _hover={{ color: cl }}
                 _focus={{ boxShadow: 'none' }}
-                onClick={() => router.push('')}>
-                Blog
-              </Button>
-              <Button
-                bg={bg}
-                color="black.700"
-                display="inline-flex"
-                alignItems="center"
-                fontSize="14px"
-                px="0"
-                fontWeight={700}
-                _hover={{ color: cl }}
-                _focus={{ boxShadow: 'none' }}
                 onClick={() => router.push('/discover')}>
                 Discover
               </Button>
@@ -253,7 +240,7 @@ export function Header(props: Props) {
                 _hover={{ color: cl }}
                 _focus={{ boxShadow: 'none' }}
                 onClick={() => router.push('')}>
-                Events
+                Guide
               </Button>
               <Button
                 bg={bg}
@@ -267,6 +254,19 @@ export function Header(props: Props) {
                 _focus={{ boxShadow: 'none' }}
                 onClick={() => router.push('/vote')}>
                 Vote
+              </Button>
+              <Button
+                bg={bg}
+                color="black.700"
+                display="inline-flex"
+                alignItems="center"
+                fontSize="14px"
+                px="0"
+                fontWeight={700}
+                _hover={{ color: cl }}
+                _focus={{ boxShadow: 'none' }}
+                onClick={() => router.push('')}>
+                Blog
               </Button>
               <Center height="50px">
                 <Divider orientation="horizontal" />
@@ -291,9 +291,8 @@ export function Header(props: Props) {
                   <Features />
                 </PopoverContent>
               </Popover>
-
               <ConnectKitButton />
-              {/* <NotificationDrawer /> */}
+              <SignInButton />
               <Box className="mobile-icon-box">
                 <FaUser className="user-icon" />
               </Box>
@@ -407,19 +406,6 @@ export function Header(props: Props) {
                   fontWeight={700}
                   _hover={{ color: cl }}
                   _focus={{ boxShadow: 'none' }}
-                  onClick={() => router.push('')}>
-                  Blog
-                </Button>
-                <Button
-                  bg={bg}
-                  color="black.700"
-                  display="inline-flex"
-                  alignItems="center"
-                  fontSize="14px"
-                  px="0"
-                  fontWeight={700}
-                  _hover={{ color: cl }}
-                  _focus={{ boxShadow: 'none' }}
                   onClick={() => router.push('/discover')}>
                   Discover
                 </Button>
@@ -505,7 +491,7 @@ export function Header(props: Props) {
                   _hover={{ color: cl }}
                   _focus={{ boxShadow: 'none' }}
                   onClick={() => router.push('')}>
-                  Events
+                  Guide
                 </Button>
                 <Button
                   bg={bg}
@@ -519,6 +505,19 @@ export function Header(props: Props) {
                   _focus={{ boxShadow: 'none' }}
                   onClick={() => router.push('/vote')}>
                   Vote
+                </Button>
+                <Button
+                  bg={bg}
+                  color="black.700"
+                  display="inline-flex"
+                  alignItems="center"
+                  fontSize="14px"
+                  px="0"
+                  fontWeight={700}
+                  _hover={{ color: cl }}
+                  _focus={{ boxShadow: 'none' }}
+                  onClick={() => router.push('')}>
+                  Blog
                 </Button>
                 <Center height="50px">
                   <Divider orientation="vertical" />
@@ -543,14 +542,11 @@ export function Header(props: Props) {
                     <Features />
                   </PopoverContent>
                 </Popover>
-
-                {/* <NotificationDrawer /> */}
               </HStack>
             </Flex>
-            {/* {children} */}
             <HStack spacing="4" display={{ base: 'flex', md: 'flex' }}>
               <ConnectKitButton />
-              {/* <NotificationDrawer /> */}
+              <SignInButton />
               <ThemeSwitcher />
               <IconButton
                 display={{ base: 'flex', md: 'none' }}

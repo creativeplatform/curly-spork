@@ -12,13 +12,13 @@ export default function useLogin() {
 
   // 1. Write the actual async function
   async function login() {
-    if (!address) return
+    if (!address || !signer) return
 
     // 1. Generate challenge which comes from the Lens API
     const { challenge } = await generateChallenge(address)
 
     // 2. Sign the challenge with the user's wallet
-    const signature = await signer?.signMessage(challenge.text)
+    const signature = await signer.signMessage(challenge.text)
 
     // 3. Send the signed challenge to the Lens API
     const { authenticate } = await sendSignedMessage({

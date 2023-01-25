@@ -10,9 +10,6 @@ export default function Upload() {
 
   return (
     <>
-      <Heading as="h3" fontSize="xl" my={4}>
-        Upload Video Assets
-      </Heading>
       <UploadVideoAsset>{''}</UploadVideoAsset>
     </>
   )

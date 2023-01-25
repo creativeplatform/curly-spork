@@ -3232,15 +3232,6 @@
     "@typescript-eslint/types" "5.48.1"
     eslint-visitor-keys "^3.3.0"
 
-"@unlock-protocol/paywall@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@unlock-protocol/paywall/-/paywall-0.2.1.tgz#058b44f207a53e2ff92a37c5d0351bacc89d2edb"
-  integrity sha512-kdEs0te68K6BFUCMAlPPprJ6ApB1wbEskMTyr74AFxKWw5+J4pAPZnVacd4hAJzF0KB4sAd3YfyI3xFhP3Vp+g==
-  dependencies:
-    babel-plugin-require-context-hook "1.0.0"
-    babel-plugin-styled-components "2.0.7"
-    postmate "1.5.2"
-
 "@wagmi/chains@0.1.9", "@wagmi/chains@^0.1.7":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@wagmi/chains/-/chains-0.1.9.tgz#9c020bde7008556eb10af17d3d4232bbe8ec29bf"
@@ -4025,12 +4016,7 @@ babel-plugin-polyfill-regenerator@^0.4.1:
   dependencies:
     "@babel/helper-define-polyfill-provider" "^0.3.3"
 
-babel-plugin-require-context-hook@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-require-context-hook/-/babel-plugin-require-context-hook-1.0.0.tgz#3f0e7cce87c338f53639b948632fd4e73834632d"
-  integrity sha512-EMZD1563QUqLhzrqcThk759RhuNVX/ZJdrtGK6drwzgvnR+ARjWyXIHPbu+tUNaMGtPz/gQeAM2M6VUw2UiUeA==
-
-babel-plugin-styled-components@2.0.7, "babel-plugin-styled-components@>= 1.12.0":
+"babel-plugin-styled-components@>= 1.12.0":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/babel-plugin-styled-components/-/babel-plugin-styled-components-2.0.7.tgz#c81ef34b713f9da2b7d3f5550df0d1e19e798086"
   integrity sha512-i7YhvPgVqRKfoQ66toiZ06jPNA3p6ierpfUuEWxNF+fV27Uv5gxBkf8KZLHUCc1nFA9j6+80pYoIpqCeyW3/bA==
@@ -7702,11 +7688,6 @@ postcss@8.4.14:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
-
-postmate@1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/postmate/-/postmate-1.5.2.tgz#d59a78b3780023c5d32225fd40633b364958bdb3"
-  integrity sha512-EHLlEmrUA/hALls49oBrtE7BzDXXjB9EiO4MZpsoO3R/jRuBmD+2WKQuYAbeuVEpTzrPpUTT79z2cz4qaFgPRg==
 
 powerglitch@^2.2.0:
   version "2.3.2"

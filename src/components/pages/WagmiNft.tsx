@@ -13,41 +13,41 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"
 
-export const WagmiNft = () => {
+const WagmiNft = () => {
   const { address } = useAccount()
   const router = useRouter()
-
-  const assetId = useMemo(() => (router?.query?.id ? String(router?.query?.id) : undefined), [router?.query])
-
+  const assetId = useMemo(() => (router?.query?.assetId ? String(router?.query?.assetId) : undefined), [router?.query])
   const { data: asset } = useAsset({
     assetId,
     enabled: assetId?.length === 36,
     refetchInterval: (asset) => (asset?.storage?.status?.phase !== 'ready' ? 5000 : false),
   })
+
   const { mutate: updateAsset } = useUpdateAsset(
     asset
       ? {
         assetId: asset.id,
         storage: {
           ipfs: true,
-          metadata: {
-            name,
-            description,
-          },
         },
       }
-      : null
+      : null,
   )
 
   const { config } = usePrepareContractWrite({
     // The demo NFT contract address on Polygon Mumbai
     address: '0xA4E1d8FE768d471B048F9d73ff90ED8fcCC03643',
     abi: videoNftAbi,
-    // Function on the contract
-    functionName: 'mint',
-    // Arguments for the mint function
-    args: address && asset?.storage?.ipfs?.nftMetadata?.url ? [address, asset?.storage?.ipfs?.nftMetadata?.url] : undefined,
+    functionName: 'feed',
+    args: [
+      // {
+      //   gasLimit: 1300000
+      // }
+    ],
     enabled: Boolean(address && asset?.storage?.ipfs?.nftMetadata?.url),
+    onSettled(data, error) {
+      console.log('Settled', { data, error });
+    },
   })
 
   const { data: contractWriteData, isSuccess, write, error: contractWriteError } = useContractWrite(config)
@@ -94,3 +94,5 @@ export const WagmiNft = () => {
     </Box>
   )
 }
+
+export default WagmiNft;

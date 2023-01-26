@@ -1,9 +1,8 @@
 import React, { ReactNode } from "react";
 import { useRouter } from 'next/router';
 import {
-  Box, BreadcrumbItem, Icon, BreadcrumbLink, Breadcrumb
+  Box, BreadcrumbItem, BreadcrumbLink, Breadcrumb
 } from "@chakra-ui/react";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import {
   LivepeerConfig,
@@ -11,11 +10,8 @@ import {
   studioProvider,
 } from '@livepeer/react';
 import { WagmiConfig, createClient } from 'wagmi'
-import { ConnectKitProvider, getDefaultClient } from 'connectkit'
+import { getDefaultClient } from 'connectkit'
 
-// import { AptosClient } from 'aptos';
-import { createContext, useMemo } from 'react';
-// import AptosNft from './AptosNft';
 import WagmiNft from './WagmiNft';
 
 interface HeaderProps {
@@ -28,18 +24,10 @@ const livepeerClient = createReactClient({
   }),
 });
 
-// export const AptosContext = createContext<AptosClient | null>(null);
-
 const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
 
   const router = useRouter();
   const query = router.query;
-
-  // create an aptos client using the devnet endpoint on app mount
-  // const aptosClient = useMemo(
-  //   () => new AptosClient('https://fullnode.devnet.aptoslabs.com/v1'),
-  //   [],
-  // );
   const wagmiClient = createClient(
     getDefaultClient({
       appName: 'Creative TV',
@@ -57,17 +45,10 @@ const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
           <BreadcrumbLink href='#'>Mint NFT Video</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      {/* <AptosContext.Provider value={aptosClient}>
-        <LivepeerConfig client={livepeerClient}>
-          <AptosNft />
-        </LivepeerConfig>
-      </AptosContext.Provider> */}
       <WagmiConfig client={wagmiClient}>
-        <ConnectKitProvider>
-          <LivepeerConfig client={livepeerClient}>
-            <WagmiNft />
-          </LivepeerConfig>
-        </ConnectKitProvider>
+        <LivepeerConfig client={livepeerClient}>
+          <WagmiNft />
+        </LivepeerConfig>
       </WagmiConfig>
     </Box>
   );

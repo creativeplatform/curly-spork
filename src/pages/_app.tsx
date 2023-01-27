@@ -9,6 +9,8 @@ import { Seo } from 'components/layout/Seo'
 import { WagmiConfig, createClient } from 'wagmi'
 import { ConnectKitProvider, getDefaultClient } from 'connectkit'
 
+import '../styles/globals.css'
+
 const wagmiClient = createClient(
   getDefaultClient({
     appName: 'Creative TV',

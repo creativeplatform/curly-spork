@@ -1,5 +1,6 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { mainnet, goerli, sepolia, polygon, optimism, arbitrum } from '@wagmi/chains'
+import { WagmiConfig, createClient, configureChains } from 'wagmi'
+import { mainnet, goerli, sepolia, polygon, optimism, arbitrum, polygonMumbai } from '@wagmi/chains'
 import { extendTheme } from '@chakra-ui/react'
 
 export const SITE_NAME = 'CREATIVE TV'
@@ -32,6 +33,7 @@ export const SOCIAL_LENS = 'https://lensfrens.xyz/thecreative.lens'
 export const SOCIAL_LINKEDIN = 'https://www.linkedin.com/company/creativeplatform'
 
 export const ETH_CHAINS = [mainnet, goerli, sepolia, polygon, optimism, arbitrum]
+export const POLYGON_CHAINS = [polygon, polygonMumbai]
 
 // Title text for the various transaction notifications.
 export const TRANSACTION_TITLES = {

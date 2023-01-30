@@ -7,13 +7,14 @@ import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
 
 import { WagmiConfig, createClient } from 'wagmi'
-import { ConnectKitProvider, getDefaultClient } from 'connectkit'
+// import { ConnectKitProvider, getDefaultClient } from 'connectkit'
+import { Web3Provider } from 'providers/Web3'
 
-const wagmiClient = createClient(
-  getDefaultClient({
-    appName: 'Creative TV',
-  })
-)
+// const wagmiClient = createClient(
+//   getDefaultClient({
+//     appName: 'Creative TV',
+//   })
+// )
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
@@ -28,15 +29,13 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <Seo />
         {isMounted && (
-          <WagmiConfig client={wagmiClient}>
-            <ConnectKitProvider>
-              <QueryClientProvider client={queryClient}>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </QueryClientProvider>
-            </ConnectKitProvider>
-          </WagmiConfig>
+          <Web3Provider>
+            <QueryClientProvider client={queryClient}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </QueryClientProvider>
+          </Web3Provider>
         )}
       </ChakraProvider>
     </LivepeerConfig>

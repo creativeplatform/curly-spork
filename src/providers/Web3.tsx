@@ -1,22 +1,25 @@
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
 import { ConnectKitProvider, getDefaultClient } from 'connectkit'
-import { ETH_CHAINS, SITE_NAME } from 'utils/config'
+import { SITE_NAME } from 'utils/config'
 import { useColorMode } from '@chakra-ui/react'
 import { ReactNode } from 'react'
+import { polygon, polygonMumbai } from '@wagmi/chains'
+
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 interface Props {
   children: ReactNode
 }
 
-const { provider, webSocketProvider } = configureChains(ETH_CHAINS, [publicProvider()])
+const { provider, chains } = configureChains([polygon, polygonMumbai], [alchemyProvider({ apiKey: `${process.env.ALCHEMY_ID}` })])
 
 const client = createClient(
   getDefaultClient({
     appName: SITE_NAME,
     autoConnect: true,
     provider,
-    webSocketProvider,
+    chains,
   })
 )
 

@@ -15,7 +15,7 @@ interface Video {
 export const videoApi = axios.create({
   baseURL: 'https://livepeer.studio/api/asset',
   headers: {
-    Authorization: `Bearer fc15d8a5-210b-4784-9db9-e5d2add9166d`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_STUDIO_API_KEY}`,
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
@@ -23,9 +23,8 @@ export const videoApi = axios.create({
 
 export const fetchAssets = async () => {
   console.log('Fetching assets')
-  const response = await videoApi.get<Video[]>('/videos')
+  const response = await videoApi.get<Video[]>('')
   const assets = response.data
-
   console.log('Assets: ', assets)
   return assets
 }

@@ -36,13 +36,13 @@ const WagmiNft = () => {
 
   const { config } = usePrepareContractWrite({
     // The demo NFT contract address on Polygon Mumbai
-    address: '0xA4E1d8FE768d471B048F9d73ff90ED8fcCC03643',
+    address: '0xdfcb0abE62911aC9eaB22D2E662F53CF4C7f90d4',
     abi: videoNftAbi,
     functionName: 'feed',
     args: [
-      // {
-      //   gasLimit: 1300000
-      // }
+      {
+        gasLimit: 1300000
+      }
     ],
     enabled: Boolean(address && asset?.storage?.ipfs?.nftMetadata?.url),
     onSettled(data, error) {

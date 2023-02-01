@@ -8,7 +8,7 @@ import { polygon, polygonMumbai } from '@wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const API_KEY = '4QdGUP8BOp3_NdNJAN1c2sWs12LtsfDF'
+const API_KEY = process.env.NEXT_PUBLIC_WEB3_API_KEY
 
 interface Props {
   children: ReactNode

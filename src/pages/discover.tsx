@@ -26,7 +26,7 @@ interface HeaderProps {
 
 export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
-  const { isLoading, isError, isSuccess, data, status, error } = useQuery(['videos'], fetchAssets, { staleTime: 3000 })
+  const { isLoading, isError, isSuccess, data, status, error } = useQuery([''], fetchAssets, { staleTime: 3000 })
 
   if (isLoading) {
     console.log('loading...')
@@ -50,12 +50,16 @@ export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
               <Stack mt="6" spacing="3">
                 <Heading size="md">{video.name}</Heading>
               </Stack>
-              {video.status == 'ready' ? <Badge colorScheme="green">{video.status}</Badge> : <Badge colorScheme="red">{video.status}</Badge>}
+              {video?.status?.phase == 'ready' ? (
+                <Badge colorScheme="green">{video.status.phase}</Badge>
+              ) : (
+                <Badge colorScheme="red">{video?.status?.phase}</Badge>
+              )}
             </CardBody>
             <Divider />
             <CardFooter>
               <ButtonGroup spacing="2" className="assets-btn-group">
-                {video?.status === 'ready' && status ? (
+                {video?.status?.phase == 'ready' ? (
                   <Button
                     onClick={() => router.push(`/pages/mint-nft-video?assetId=${video.id}`)}
                     className="card-mint-button"
@@ -68,7 +72,7 @@ export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
                     Update Asset
                   </Button>
                 )}
-                {video.status == 'ready' ? (
+                {video?.status?.phase == 'ready' ? (
                   <Button
                     onClick={() => router.push(`/pages/mint-nft-video?assetId=${video.id}`)}
                     className="card-mint-button"

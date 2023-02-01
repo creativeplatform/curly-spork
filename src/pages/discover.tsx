@@ -26,7 +26,7 @@ interface HeaderProps {
 
 export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
-  const { isLoading, isError, isSuccess, data, status, error } = useQuery(['videos'], fetchAssets)
+  const { isLoading, isError, isSuccess, data, status, error } = useQuery(['videos'], fetchAssets, { staleTime: 3000 })
 
   if (isLoading) {
     console.log('loading...')

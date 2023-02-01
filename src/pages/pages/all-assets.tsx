@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import AllAssets from '../../components/pages/AllAssets'
+import AllAssets from '../discover'
 import { BreadcrumbItem, Icon, BreadcrumbLink, Breadcrumb } from '@chakra-ui/react'
 
 export default function All() {

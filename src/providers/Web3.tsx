@@ -8,11 +8,13 @@ import { polygon, polygonMumbai } from '@wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
+const API_KEY = '4QdGUP8BOp3_NdNJAN1c2sWs12LtsfDF'
+
 interface Props {
   children: ReactNode
 }
 
-const { provider, chains } = configureChains([polygon, polygonMumbai], [alchemyProvider({ apiKey: `${process.env.ALCHEMY_ID}` })])
+const { provider, chains } = configureChains([polygon, polygonMumbai], [alchemyProvider({ apiKey: API_KEY })])
 
 const client = createClient(
   getDefaultClient({

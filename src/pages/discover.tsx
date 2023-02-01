@@ -1,5 +1,7 @@
-import React, { ReactNode, useState, useEffect } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useAsset } from '@livepeer/react'
+import { useQuery } from '@tanstack/react-query'
 import {
   Card,
   CardBody,
@@ -15,64 +17,51 @@ import {
   AspectRatio,
   Badge,
 } from '@chakra-ui/react'
-import axios from 'axios'
 import { motion } from 'framer-motion'
+import { fetchAssets } from 'utils/fetchers/assets'
+
 interface HeaderProps {
   children: ReactNode
 }
 
-const AllAssets = ({ children }: HeaderProps): JSX.Element => {
+export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
-  const [data, setData] = useState<any[]>([])
+  const { isLoading, isError, isSuccess, data, status, error } = useQuery([''], fetchAssets, { staleTime: 3000 })
 
-  // For Live
-  useEffect(() => {
-    try {
-      fetch('https://livepeer.studio/api/asset', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer fc15d8a5-210b-4784-9db9-e5d2add9166d`,
-          Accept: 'application/json',
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => setData(res))
-    } catch (error) {
-      console.log('Error is ', error)
-    }
-  }, [])
+  if (isLoading) {
+    console.log('loading...')
+    return <div>Loading...</div>
+  }
 
-  // For Local
-  // useEffect(() => {
-  //     fetch("/api/all-assets")
-  //       .then((res) => res.json())
-  //       .then((res) => setData(JSON.parse(res.data)));
-  //   }, []);
+  if (isError) {
+    console.log('error', error)
+    return <div>Error:</div>
+  }
 
   return (
     <Box>
       <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(300px, 1fr))">
-        {data.slice(0, data.length).map((post, index) => (
-          <Card key={post.id}>
+        {data.slice(0, data.length).map((video, index) => (
+          <Card key={video.id}>
             <CardBody>
               <AspectRatio maxW="560px" ratio={1}>
-                <iframe title="naruto" src={post.downloadUrl} allowFullScreen />
+                <iframe title={video.name} src={video.downloadUrl} allowFullScreen />
               </AspectRatio>
               <Stack mt="6" spacing="3">
-                <Heading size="md">{post.name}</Heading>
+                <Heading size="md">{video.name}</Heading>
               </Stack>
-              {post.status.phase == 'ready' ? (
-                <Badge colorScheme="green">{post.status.phase}</Badge>
+              {video?.status?.phase == 'ready' ? (
+                <Badge colorScheme="green">{video.status.phase}</Badge>
               ) : (
-                <Badge colorScheme="red">{post.status.phase}</Badge>
+                <Badge colorScheme="red">{video?.status?.phase}</Badge>
               )}
             </CardBody>
             <Divider />
             <CardFooter>
               <ButtonGroup spacing="2" className="assets-btn-group">
-                {post?.status?.phase === 'ready' && post?.storage?.status?.phase !== 'ready' ? (
+                {video?.status?.phase == 'ready' ? (
                   <Button
-                    onClick={() => router.push(`/pages/mint-nft-video?assetId=${post.id}`)}
+                    onClick={() => router.push(`/pages/mint-nft-video?assetId=${video.id}`)}
                     className="card-mint-button"
                     as={motion.div}
                     _hover={{ transform: 'scale(1.1)' }}>
@@ -83,9 +72,9 @@ const AllAssets = ({ children }: HeaderProps): JSX.Element => {
                     Update Asset
                   </Button>
                 )}
-                {post.status.phase == 'ready' ? (
+                {video?.status?.phase == 'ready' ? (
                   <Button
-                    onClick={() => router.push(`/pages/mint-nft-video?assetId=${post.id}`)}
+                    onClick={() => router.push(`/pages/mint-nft-video?assetId=${video.id}`)}
                     className="card-mint-button"
                     as={motion.div}
                     _hover={{ transform: 'scale(1.1)' }}>

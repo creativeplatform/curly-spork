@@ -9,10 +9,9 @@ import {
   createReactClient,
   studioProvider,
 } from '@livepeer/react';
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultClient } from 'connectkit'
 
 import WagmiNft from './WagmiNft';
+import { Web3Provider } from 'providers/Web3';
 
 interface HeaderProps {
   children: ReactNode
@@ -27,12 +26,6 @@ const livepeerClient = createReactClient({
 const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
 
   const router = useRouter();
-  const query = router.query;
-  const wagmiClient = createClient(
-    getDefaultClient({
-      appName: 'Creative TV',
-    })
-  );
 
   return (
     <Box>
@@ -45,11 +38,10 @@ const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
           <BreadcrumbLink href='#'>Mint NFT Video</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <WagmiConfig client={wagmiClient}>
-        <LivepeerConfig client={livepeerClient}>
-          <WagmiNft />
-        </LivepeerConfig>
-      </WagmiConfig>
+
+      <LivepeerConfig client={livepeerClient}>
+        <WagmiNft />
+      </LivepeerConfig>
     </Box>
   );
 }

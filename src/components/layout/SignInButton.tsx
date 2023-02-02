@@ -2,9 +2,34 @@ import React, { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { Box, ButtonGroup } from '@chakra-ui/react'
 import { ConnectKitButton } from 'connectkit'
+import { MediaRenderer } from '@thirdweb-dev/react'
 
 import useLogin from 'lib/auth/useLogin'
 import useLensUser from 'lib/auth/useLensUser'
+
+import styled from 'styled-components'
+const StyledButton = styled.button`
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 14px 24px;
+  color: #ffffff;
+  background: #ec407a;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 10rem;
+  box-shadow: 0 4px 24px -6px #ec407a;
+
+  transition: 200ms ease;
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 40px -6px #ec407a;
+  }
+  &:active {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 32px -6px #ec407a;
+  }
+`
 
 type Props = {}
 
@@ -57,8 +82,12 @@ export default function SignInButton({}: Props) {
   if (profileQuery.data?.defaultProfile) {
     return (
       <ButtonGroup display="flex" alignItems="center">
-        <ConnectKitButton />
-        <Box
+        <ConnectKitButton.Custom>
+          {({ isConnected, isConnecting, show, hide, truncatedAddress, ensName }) => {
+            return <StyledButton onClick={show}>{isConnected ? ensName ?? truncatedAddress : 'Connect Wallet'}</StyledButton>
+          }}
+        </ConnectKitButton.Custom>
+        <MediaRenderer
           // @ts-ignore
           src={profileQuery?.data?.defaultProfile?.picture?.original?.url || ''}
           alt={profileQuery.data.defaultProfile.name || ''}

@@ -5,8 +5,10 @@ import CreateAndViewAsset from './CreateAndViewAsset'
 
 import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react'
 
-interface HeaderProps {
-  children: ReactNode
+declare var process: {
+  env: {
+    NEXT_PUBLIC_STUDIO_API_KEY: string
+  }
 }
 
 const livepeerClient = createReactClient({
@@ -14,6 +16,10 @@ const livepeerClient = createReactClient({
     apiKey: `${process.env.NEXT_PUBLIC_STUDIO_API_KEY}`,
   }),
 })
+
+interface HeaderProps {
+  children: ReactNode
+}
 
 const UploadVideoAsset = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()

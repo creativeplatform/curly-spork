@@ -2,13 +2,7 @@ import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { Box, BreadcrumbItem, BreadcrumbLink, Breadcrumb } from '@chakra-ui/react'
 import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react'
-
 import WagmiNft from './WagmiNft'
-import { Web3Provider } from 'providers/Web3'
-
-interface HeaderProps {
-  children: ReactNode
-}
 
 declare var process: {
   env: {
@@ -22,25 +16,29 @@ const livepeerClient = createReactClient({
   }),
 })
 
+interface HeaderProps {
+  children: ReactNode
+}
+
 const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
 
   return (
-    <Box>
-      <Breadcrumb>
-        <BreadcrumbItem>
-          <BreadcrumbLink onClick={() => router.push('/')}>Home</BreadcrumbLink>
-        </BreadcrumbItem>
+    <LivepeerConfig client={livepeerClient}>
+      <Box>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <BreadcrumbLink onClick={() => router.push('/')}>Home</BreadcrumbLink>
+          </BreadcrumbItem>
 
-        <BreadcrumbItem isCurrentPage className="active-crumb">
-          <BreadcrumbLink href="#">Mint NFT Video</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
+          <BreadcrumbItem isCurrentPage className="active-crumb">
+            <BreadcrumbLink href="#">Mint NFT Video</BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
 
-      <LivepeerConfig client={livepeerClient}>
         <WagmiNft />
-      </LivepeerConfig>
-    </Box>
+      </Box>
+    </LivepeerConfig>
   )
 }
 export default MintNftVideo

@@ -14,10 +14,19 @@ import {
   IconProps,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { LIVEPEER_HERO_PLAYBACK_ID } from 'utils/config'
 import { HERO_NAME, HERO_DESCRIPTION, HERO_BUTTONS, HERO_IMAGE } from 'utils/context'
-import { Player } from '@livepeer/react'
+import { createReactClient, studioProvider, LivepeerConfig, Player } from '@livepeer/react'
 
-const HERO_PLAYBACK_ID = '3713lxes2gdtl77t'
+declare var process: {
+  env: {
+    NEXT_PUBLIC_STUDIO_API_KEY: string
+  }
+}
+
+const client = createReactClient({
+  provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY }),
+})
 
 const PosterImage = () => {
   return <Image src={HERO_IMAGE} height={'100%'} objectFit="cover" alt="Creative Warrior" placeholder="blur" />
@@ -25,80 +34,82 @@ const PosterImage = () => {
 
 export default function HeroSection() {
   return (
-    <Container maxW={'7xl'}>
-      <Stack align={'center'} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }} direction={{ base: 'column', md: 'row' }}>
-        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-          <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
-            <Text
-              as={'span'}
-              position={'relative'}
-              _after={{
-                content: "''",
-                width: 'full',
-                height: '30%',
-                position: 'absolute',
-                bottom: 1,
-                left: 0,
-                bg: '#EE774D',
-                zIndex: -1,
-              }}>
-              {HERO_NAME.top}
-            </Text>
-            <br />
-            <Text as={'span'} color={'#EE774D'}>
-              {HERO_NAME.bottom}
-            </Text>
-          </Heading>
-          <Text color={'gray.500'}>{HERO_DESCRIPTION}</Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-            <Button rounded={'full'} size={'lg'} fontWeight={'normal'} px={6} colorScheme={'orange'} bg={'#F2C57C'} _hover={{ bg: '#D9B06F' }}>
-              {HERO_BUTTONS.primary.text}
-            </Button>
-            <Button
-              rounded={'full'}
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              colorScheme={'pink'}
-              bg={'#FF4583'}
-              _hover={{ bg: '#D93B6F' }}
-              leftIcon={<PlayIcon h={4} w={4} color={'gray.100'} />}>
-              {HERO_BUTTONS.secondary.text}
-            </Button>
+    <LivepeerConfig client={client}>
+      <Container maxW={'7xl'}>
+        <Stack align={'center'} spacing={{ base: 8, md: 10 }} py={{ base: 20, md: 28 }} direction={{ base: 'column', md: 'row' }}>
+          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+            <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
+              <Text
+                as={'span'}
+                position={'relative'}
+                _after={{
+                  content: "''",
+                  width: 'full',
+                  height: '30%',
+                  position: 'absolute',
+                  bottom: 1,
+                  left: 0,
+                  bg: '#EE774D',
+                  zIndex: -1,
+                }}>
+                {HERO_NAME.top}
+              </Text>
+              <br />
+              <Text as={'span'} color={'#EE774D'}>
+                {HERO_NAME.bottom}
+              </Text>
+            </Heading>
+            <Text color={'gray.500'}>{HERO_DESCRIPTION}</Text>
+            <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
+              <Button rounded={'full'} size={'lg'} fontWeight={'normal'} px={6} colorScheme={'orange'} bg={'#F2C57C'} _hover={{ bg: '#D9B06F' }}>
+                {HERO_BUTTONS.primary.text}
+              </Button>
+              <Button
+                rounded={'full'}
+                size={'lg'}
+                fontWeight={'normal'}
+                px={6}
+                colorScheme={'pink'}
+                bg={'#FF4583'}
+                _hover={{ bg: '#D93B6F' }}
+                leftIcon={<PlayIcon h={4} w={4} color={'gray.100'} />}>
+                {HERO_BUTTONS.secondary.text}
+              </Button>
+            </Stack>
           </Stack>
+          <Flex flex={1} justify={'center'} align={'center'} position={'relative'} w={'full'}>
+            <Blob w={'150%'} h={'150%'} position={'absolute'} top={'-20%'} left={0} zIndex={-1} color={useColorModeValue('#FF4583', '#D93B6F')} />
+            <Box position={'relative'} height={'260px'} rounded={'2xl'} boxShadow={'2xl'} width={'full'} overflow={'hidden'}>
+              <IconButton
+                aria-label={'Play Button'}
+                variant={'ghost'}
+                _hover={{ bg: 'transparent' }}
+                icon={<PlayIcon w={12} h={12} />}
+                size={'lg'}
+                color={'white'}
+                position={'absolute'}
+                left={'50%'}
+                top={'50%'}
+                transform={'translateX(-50%) translateY(-50%)'}
+              />
+              <Player
+                title="Creative Introduction"
+                playbackId={LIVEPEER_HERO_PLAYBACK_ID}
+                poster={<PosterImage />}
+                showPipButton
+                showTitle={false}
+                aspectRatio="16to9"
+                autoUrlUpload={{ fallback: true, ipfsGateway: 'https://w3s.link' }}
+                showUploadingIndicator={true}
+                controls={{
+                  autohide: 3000,
+                }}
+              />
+            </Box>
+          </Flex>
         </Stack>
-        <Flex flex={1} justify={'center'} align={'center'} position={'relative'} w={'full'}>
-          <Blob w={'150%'} h={'150%'} position={'absolute'} top={'-20%'} left={0} zIndex={-1} color={useColorModeValue('#FF4583', '#D93B6F')} />
-          <Box position={'relative'} height={'260px'} rounded={'2xl'} boxShadow={'2xl'} width={'full'} overflow={'hidden'}>
-            <IconButton
-              aria-label={'Play Button'}
-              variant={'ghost'}
-              _hover={{ bg: 'transparent' }}
-              icon={<PlayIcon w={12} h={12} />}
-              size={'lg'}
-              color={'white'}
-              position={'absolute'}
-              left={'50%'}
-              top={'50%'}
-              transform={'translateX(-50%) translateY(-50%)'}
-            />
-            <Player
-              title="Creative Introduction"
-              playbackId={HERO_PLAYBACK_ID}
-              poster={<PosterImage />}
-              showPipButton
-              showTitle={false}
-              aspectRatio="16to9"
-              autoUrlUpload={{ fallback: true, ipfsGateway: 'https://w3s.link' }}
-              showUploadingIndicator={true}
-              controls={{
-                autohide: 3000,
-              }}
-            />
-          </Box>
-        </Flex>
-      </Stack>
-    </Container>
+      </Container>
+    </LivepeerConfig>
   )
 }
 

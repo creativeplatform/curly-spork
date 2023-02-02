@@ -21,3 +21,5 @@ export const FEATURED_TEXT = {
 }
 
 export const FEATURED_IMAGE = 'https://bafybeiefwmq6zykvyhwih5qbhucxrc34zbtxjbwboz7hdgkyh3u6p2ykfa.ipfs.nftstorage.link'
+
+export const FEATURED_PLAYBACK_ID = 'c3c7u34h2y47jqpd'

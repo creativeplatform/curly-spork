@@ -1,23 +1,18 @@
 import React from 'react'
-import {
-  Container,
-  Stack,
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Icon,
-  IconButton,
-  createIcon,
-  IconProps,
-  useColorModeValue,
-} from '@chakra-ui/react'
-import { FEATURED_TEXT, FEATURED_IMAGE } from 'utils/context'
-import { Player } from '@livepeer/react'
+import { Container, Stack, Flex, Box, Heading, Text, Image, IconButton, createIcon } from '@chakra-ui/react'
+import { LIVEPEER_FEATURED_PLAYBACK_ID } from 'utils/config'
+import { FEATURED_TEXT } from 'utils/context'
+import { createReactClient, studioProvider, LivepeerConfig, Player } from '@livepeer/react'
 
-const FEATURED_PLAYBACK_ID = 'c3c7u34h2y47jqpd'
+declare var process: {
+  env: {
+    NEXT_PUBLIC_STUDIO_API_KEY: string
+  }
+}
+
+const client = createReactClient({
+  provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY }),
+})
 
 const PosterImage = () => {
   return (
@@ -31,68 +26,70 @@ const PosterImage = () => {
   )
 }
 
-export default function HeroSection() {
+export default function FeaturedVideo() {
   return (
-    <Container maxW={'7xl'}>
-      <Stack align={'center'} spacing={{ base: 0, md: -10 }} py={{ base: 20, md: 28 }} direction={{ base: 'column', md: 'row' }}>
-        <Flex flex={1} justify={'left'} align={'center'} position={'relative'} w={'full'}>
-          <Box position={'relative'} height={'28s0px'} rounded={'2xl'} boxShadow={'2xl'} width={'full'} overflow={'hidden'}>
-            <IconButton
-              aria-label={'Play Button'}
-              variant={'ghost'}
-              _hover={{ bg: 'transparent' }}
-              icon={<PlayIcon w={12} h={12} />}
-              size={'lg'}
-              color={'white'}
-              position={'absolute'}
-              left={'50%'}
-              top={'50%'}
-              transform={'translateX(-50%) translateY(-50%)'}
-            />
-            <Player
-              title="Creative Introduction"
-              playbackId={FEATURED_PLAYBACK_ID}
-              poster={<PosterImage />}
-              showPipButton
-              showTitle={false}
-              aspectRatio="16to9"
-              autoUrlUpload={{ fallback: true, ipfsGateway: 'https://w3s.link' }}
-              showUploadingIndicator={true}
-              controls={{
-                autohide: 3000,
-              }}
-            />
-          </Box>
-        </Flex>
-        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-          <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: '4xl', sm: '3xl', lg: '5xl' }} zIndex={-1}>
-            <Text
-              as={'span'}
-              position={'relative'}
-              _after={{
-                content: "''",
-                width: 'full',
-                height: '30%',
-                position: 'absolute',
-                bottom: 1,
-                left: 0,
-                bg: '#EE774D',
-                zIndex: -1,
-              }}>
-              {FEATURED_TEXT.top}
-            </Text>
-            <br />
-            <Text as={'span'} color={'#EE774D'}>
-              {FEATURED_TEXT.middle}
-            </Text>
-            <br />
-            <Text as={'span'} color={'#EE774D'}>
-              {FEATURED_TEXT.bottom}
-            </Text>
-          </Heading>
+    <LivepeerConfig client={client}>
+      <Container maxW={'7xl'}>
+        <Stack align={'center'} spacing={{ base: 0, md: -10 }} py={{ base: 20, md: 28 }} direction={{ base: 'column', md: 'row' }}>
+          <Flex flex={1} justify={'left'} align={'center'} position={'relative'} w={'full'}>
+            <Box position={'relative'} height={'28s0px'} rounded={'2xl'} boxShadow={'2xl'} width={'full'} overflow={'hidden'}>
+              <IconButton
+                aria-label={'Play Button'}
+                variant={'ghost'}
+                _hover={{ bg: 'transparent' }}
+                icon={<PlayIcon w={12} h={12} />}
+                size={'lg'}
+                color={'white'}
+                position={'absolute'}
+                left={'50%'}
+                top={'50%'}
+                transform={'translateX(-50%) translateY(-50%)'}
+              />
+              <Player
+                title="Creative Introduction"
+                playbackId={LIVEPEER_FEATURED_PLAYBACK_ID}
+                poster={<PosterImage />}
+                showPipButton
+                showTitle={false}
+                aspectRatio="16to9"
+                autoUrlUpload={{ fallback: true, ipfsGateway: 'https://w3s.link' }}
+                showUploadingIndicator={true}
+                controls={{
+                  autohide: 3000,
+                }}
+              />
+            </Box>
+          </Flex>
+          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+            <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: '4xl', sm: '3xl', lg: '5xl' }} zIndex={-1}>
+              <Text
+                as={'span'}
+                position={'relative'}
+                _after={{
+                  content: "''",
+                  width: 'full',
+                  height: '30%',
+                  position: 'absolute',
+                  bottom: 1,
+                  left: 0,
+                  bg: '#EE774D',
+                  zIndex: -1,
+                }}>
+                {FEATURED_TEXT.top}
+              </Text>
+              <br />
+              <Text as={'span'} color={'#EE774D'}>
+                {FEATURED_TEXT.middle}
+              </Text>
+              <br />
+              <Text as={'span'} color={'#EE774D'}>
+                {FEATURED_TEXT.bottom}
+              </Text>
+            </Heading>
+          </Stack>
         </Stack>
-      </Stack>
-    </Container>
+      </Container>
+    </LivepeerConfig>
   )
 }
 

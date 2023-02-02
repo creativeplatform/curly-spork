@@ -1,5 +1,4 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { WagmiConfig, createClient, configureChains } from 'wagmi'
 import { mainnet, goerli, sepolia, polygon, optimism, arbitrum, polygonMumbai } from '@wagmi/chains'
 import { extendTheme } from '@chakra-ui/react'
 
@@ -40,6 +39,11 @@ export const TRANSACTION_TITLES = {
   transactionStarted: 'Local Transaction Started',
   transactionSucceed: 'Local Transaction Completed',
 }
+
+// Livepeer API
+export const LIVEPEER_API_URL = 'https://livepeer.com/api'
+export const LIVEPEER_HERO_PLAYBACK_ID = '3713lxes2gdtl77t'
+export const LIVEPEER_FEATURED_PLAYBACK_ID = 'c3c7u34h2y47jqpd'
 
 export const SERVER_SESSION_SETTINGS = {
   cookieName: SITE_NAME,

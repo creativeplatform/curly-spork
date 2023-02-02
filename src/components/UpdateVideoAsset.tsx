@@ -1,24 +1,23 @@
 import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
-// import UpdateAsset from '../UpdateAsset'
-
 import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react'
-
-interface HeaderProps {
-  children: ReactNode
-}
 
 declare var process: {
   env: {
     NEXT_PUBLIC_STUDIO_API_KEY: string
   }
 }
+
 const livepeerClient = createReactClient({
   provider: studioProvider({
     apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY,
   }),
 })
+
+interface HeaderProps {
+  children: ReactNode
+}
 
 const UpdateVideoAsset = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()

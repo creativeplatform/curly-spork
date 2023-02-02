@@ -7,7 +7,7 @@ import { ReactNode } from 'react'
 import { polygon, polygonMumbai } from '@wagmi/chains'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+// import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 declare var process: {
   env: {

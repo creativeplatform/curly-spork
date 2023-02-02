@@ -6,16 +6,7 @@ import { Layout } from 'components/layout'
 import { ChakraProvider } from 'providers/Chakra'
 import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
-
-import { WagmiConfig, createClient } from 'wagmi'
-// import { ConnectKitProvider, getDefaultClient } from 'connectkit'
 import { Web3Provider } from 'providers/Web3'
-
-// const wagmiClient = createClient(
-//   getDefaultClient({
-//     appName: 'Creative TV',
-//   })
-// )
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()

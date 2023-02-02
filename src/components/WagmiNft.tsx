@@ -8,10 +8,8 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi'
 // See: https://wagmi.sh/docs/typescript
 import videoNftAbi from './videoNftAbi'
 
-import {
-  Box, Button, Flex
-} from "@chakra-ui/react";
-import { motion } from "framer-motion"
+import { Box, Button, Flex } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 
 const WagmiNft = () => {
   const { address } = useAccount()
@@ -26,12 +24,12 @@ const WagmiNft = () => {
   const { mutate: updateAsset } = useUpdateAsset(
     asset
       ? {
-        assetId: asset.id,
-        storage: {
-          ipfs: true,
-        },
-      }
-      : null,
+          assetId: asset.id,
+          storage: {
+            ipfs: true,
+          },
+        }
+      : null
   )
 
   const { config } = usePrepareContractWrite({
@@ -41,27 +39,21 @@ const WagmiNft = () => {
     functionName: 'feed',
     args: [
       {
-        gasLimit: 1300000
-      }
+        gasLimit: 1300000,
+      },
     ],
     enabled: Boolean(address && asset?.storage?.ipfs?.nftMetadata?.url),
     onSettled(data, error) {
-      console.log('Settled', { data, error });
+      console.log('Settled', { data, error })
     },
   })
 
   const { data: contractWriteData, isSuccess, write, error: contractWriteError } = useContractWrite(config)
 
   return (
-    <Box className='address-mint'>
-      <Button className='card-mint-button'
-        as={motion.div} _hover={{ transform: "scale(1.1)" }}
-      >
-        {!address ? (
-          'Connect Wallet'
-        ) : (
-          address
-        )}
+    <Box className="address-mint">
+      <Button className="card-mint-button" as={motion.div} _hover={{ transform: 'scale(1.1)' }}>
+        {!address ? 'Connect Wallet' : address}
       </Button>
       {address && assetId && (
         <>
@@ -74,7 +66,7 @@ const WagmiNft = () => {
               Upload to IPFS
             </button>
           ) : contractWriteData?.hash && isSuccess ? (
-            <a target="_blank" href={`https://mumbai.polygonscan.com/tx/${contractWriteData.hash}`}>
+            <a target="_blank" href={`https://mumbai.polygonscan.com/tx/${contractWriteData.hash}`} rel="noreferrer">
               <button>View Mint Transaction</button>
             </a>
           ) : contractWriteError ? (
@@ -95,4 +87,4 @@ const WagmiNft = () => {
   )
 }
 
-export default WagmiNft;
+export default WagmiNft

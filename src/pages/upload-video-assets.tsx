@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import UploadVideoAsset from '../../components/pages/UploadVideoAsset'
+import UploadVideoAsset from '../../components/UploadVideoAsset'
 
 export default function Upload() {
   const router = useRouter()

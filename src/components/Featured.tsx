@@ -2,17 +2,8 @@ import React from 'react'
 import { Container, Stack, Flex, Box, Heading, Text, Image, IconButton, createIcon } from '@chakra-ui/react'
 import { LIVEPEER_FEATURED_PLAYBACK_ID } from 'utils/config'
 import { FEATURED_TEXT } from 'utils/context'
-import { createReactClient, studioProvider, LivepeerConfig, Player } from '@livepeer/react'
-
-declare var process: {
-  env: {
-    NEXT_PUBLIC_STUDIO_API_KEY: string
-  }
-}
-
-const client = createReactClient({
-  provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY }),
-})
+import { LivepeerConfig, Player } from '@livepeer/react'
+import { useLivepeerClient } from 'hooks/useLivepeerClient'
 
 const PosterImage = () => {
   return (
@@ -28,7 +19,7 @@ const PosterImage = () => {
 
 export default function FeaturedVideo() {
   return (
-    <LivepeerConfig client={client}>
+    <LivepeerConfig client={useLivepeerClient}>
       <Container maxW={'7xl'}>
         <Stack align={'center'} spacing={{ base: 0, md: -10 }} py={{ base: 20, md: 28 }} direction={{ base: 'column', md: 'row' }}>
           <Flex flex={1} justify={'left'} align={'center'} position={'relative'} w={'full'}>

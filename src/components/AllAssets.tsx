@@ -19,17 +19,8 @@ import {
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { fetchAssets } from 'utils/fetchers/assets'
-import { createReactClient, studioProvider, LivepeerConfig } from '@livepeer/react'
-
-declare var process: {
-  env: {
-    NEXT_PUBLIC_STUDIO_API_KEY: string
-  }
-}
-
-const client = createReactClient({
-  provider: studioProvider({ apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY }),
-})
+import { LivepeerConfig } from '@livepeer/react'
+import { useLivepeerClient } from 'hooks/useLivepeerClient'
 
 interface HeaderProps {
   children: ReactNode
@@ -53,7 +44,7 @@ export const AllAssets = ({ children }: HeaderProps): JSX.Element => {
     console.log('data', data)
   }
   return (
-    <LivepeerConfig client={client}>
+    <LivepeerConfig client={useLivepeerClient}>
       <Box>
         <SimpleGrid spacing={4} templateColumns="repeat(auto-fill, minmax(300px, 1fr))">
           {data.slice(0, data.length).map((video, index) => (

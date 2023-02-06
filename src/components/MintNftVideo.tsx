@@ -1,20 +1,9 @@
 import React, { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { Box, BreadcrumbItem, BreadcrumbLink, Breadcrumb } from '@chakra-ui/react'
-import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react'
+import { LivepeerConfig } from '@livepeer/react'
 import WagmiNft from './WagmiNft'
-
-declare var process: {
-  env: {
-    NEXT_PUBLIC_STUDIO_API_KEY: string
-  }
-}
-
-const livepeerClient = createReactClient({
-  provider: studioProvider({
-    apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY,
-  }),
-})
+import { useLivepeerClient } from 'hooks/useLivepeerClient'
 
 interface HeaderProps {
   children: ReactNode
@@ -24,7 +13,7 @@ const MintNftVideo = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
 
   return (
-    <LivepeerConfig client={livepeerClient}>
+    <LivepeerConfig client={useLivepeerClient}>
       <Box>
         <Breadcrumb>
           <BreadcrumbItem>

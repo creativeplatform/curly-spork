@@ -2,18 +2,12 @@ import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/reac
 import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
 import CreateAndViewAsset from './CreateAndViewAsset'
-
-import { LivepeerConfig, createReactClient, studioProvider } from '@livepeer/react'
+import { LivepeerConfig } from '@livepeer/react'
+import { useLivepeerClient } from '../hooks/useLivepeerClient'
 
 interface HeaderProps {
   children: ReactNode
 }
-
-const livepeerClient = createReactClient({
-  provider: studioProvider({
-    apiKey: `${process.env.NEXT_PUBLIC_STUDIO_API_KEY}`,
-  }),
-})
 
 const UploadVideoAsset = ({ children }: HeaderProps): JSX.Element => {
   const router = useRouter()
@@ -28,7 +22,7 @@ const UploadVideoAsset = ({ children }: HeaderProps): JSX.Element => {
           <BreadcrumbLink href="#">Upload Video Assets</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
-      <LivepeerConfig client={livepeerClient}>
+      <LivepeerConfig client={useLivepeerClient}>
         <CreateAndViewAsset />
       </LivepeerConfig>
     </Box>
